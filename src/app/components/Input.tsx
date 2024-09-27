@@ -1,9 +1,10 @@
 'use client';
 
+import { Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const Input = () => {
-   const pathname = usePathname();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   
@@ -19,5 +20,12 @@ export const Input = () => {
   return (
     <input type="text" defaultValue={searchParams.get("q") || ''} onChange={handleQueryChange} className="w-full p-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500" />
   )
-
 }
+
+const InputWrapper = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Input />
+  </Suspense>
+);
+
+export default InputWrapper;
